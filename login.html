@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        min-width: 100vw;
+        min-height: 100vh;
+        background: linear-gradient(
+          30deg,
+          aqua,
+          green,
+          greenyellow,
+          green,
+          aqua
+        );
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .nav {
+        width: 150px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .formBlock {
+        width: 500px;
+        height: 300px;
+        border: 6px double #00fffa;
+        border-radius: 15px;
+        background-color: teal;
+        display: flex;
+        flex-direction: column;
+        animation: scaled 1s ease-in-out;
+        margin-top: 20px;
+      }
+      @keyframes scaled {
+        0% {
+          transform: scale(0);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .formHead {
+        color: white;
+        text-shadow: 0 5px 5px black;
+        text-align: center;
+        width: 100%;
+        margin-top: 15px;
+      }
+      .inputItem {
+        max-width: 100%;
+        margin: 20px;
+        padding: 5px;
+        color: black;
+        border: 3px solid black;
+        border-radius: 5px;
+      }
+      .submitBtn {
+        width: 100px;
+        height: 25px;
+        border: 3px solid black;
+        border-radius: 5px;
+        background-color: white;
+        margin: 0 auto;
+        font-size: 16px;
+        text-align: center;
+        transition: 0.2s;
+        cursor: pointer;
+      }
+      .submitBtn:hover {
+        background-color: grey;
+        transform: scale(0.98);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/">Main</a>
+      <a href="/auth/registration">Registration</a>
+    </nav>
+    <form action="/auth/login" method="post" class="formBlock">
+      <h2 class="formHead">Login</h2>
+      <input
+        type="text"
+        name="email"
+        placeholder="Почта"
+        class="inputItem"
+        required
+      />
+      <input
+        type="password"
+        name="pass"
+        placeholder="Пароль"
+        class="inputItem"
+        required
+      />
+      <button class="submitBtn">Login</button>
+    </form>
+  </body>
+</html>
