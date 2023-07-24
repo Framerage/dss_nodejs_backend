@@ -41,7 +41,7 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
 app.use(express.urlencoded({ extended: true }));
-// app.use(cors);
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.sendFile(createPath("index"));
