@@ -12,11 +12,18 @@ const cardSchema = new schema(
       required: true,
       unique: true,
     },
+    fullDescrip: {
+      type: String,
+    },
     styles: {
       type: Array,
       default: [],
     },
     viewsCount: {
+      type: Number,
+      default: 0,
+    },
+    likes: {
       type: Number,
       default: 0,
     },

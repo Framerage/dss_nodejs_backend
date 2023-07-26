@@ -43,18 +43,8 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.sendFile(createPath("index"));
-});
 app.get("/add-cards", (req, res) => {
   res.sendFile(createPath("createCard"));
-});
-
-app.get("/auth/login", (req, res) => {
-  res.sendFile(createPath("login"));
-});
-app.get("/auth/registration", (req, res) => {
-  res.sendFile(createPath("registration"));
 });
 
 app.post(
