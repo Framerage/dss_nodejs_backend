@@ -1,34 +1,42 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const userReg = require("../models/user");
-
+const accessMails = ["officialigonin@mail.ru"];
 const userRegister = async (req, res) => {
   try {
     const password = req.body.pass;
+    const userEmail = req.body.email;
+    const role = () => {
+      if (accessMails.includes(userEmail)) {
+        return "admin";
+      }
+      return "user";
+    };
     const salt = await bcrypt.genSalt(10);
     const hashPass = await bcrypt.hash(password, salt);
-    const { name, email } = req.body;
-    const userDoc = new userReg({ name, email, pass: hashPass });
+    const { name, email, regPromo, persPromo } = req.body;
+    const userDoc = new userReg({
+      name,
+      email,
+      pass: hashPass,
+      regPromo,
+      persPromo,
+      role: role(),
+    });
 
     const user = await userDoc.save();
-
-    const token = jwt.sign(
-      {
-        _id: user._id,
-      },
-      "cucumberbl",
-      {
-        expiresIn: "1d",
-      }
-    );
     const { pass, ...userData } = user._doc;
     res.json({
       ...userData,
-      token,
+      message: "Регистрация прошла успешно",
+      sucsess: true,
+      status: 200,
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Регистрация не удалась" });
+    res
+      .status(500)
+      .json({ message: "Регистрация не удалась", sucsess: false, status: 400 });
   }
 };
 const userLogin = async (req, res) => {

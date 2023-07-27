@@ -3,7 +3,7 @@ const registerValidation = [
   body("email", "Неверный формат почты").isEmail(),
   body("pass", "Пароль должен быть не менее 5 символов").isLength({ min: 5 }),
   body("name", "Имя должно быть не менее 3 символов").isLength({ min: 3 }),
-  body("promoCode", "Некорректный промокод").isLength({ min: 6 }),
+  body("regPromo", "Некорректный промокод").optional().isLength({ min: 6 }),
 ];
 
 const loginVlidation = [

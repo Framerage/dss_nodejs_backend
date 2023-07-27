@@ -16,6 +16,14 @@ const userSchema = new schema(
       type: String,
       required: true,
     },
+    persPromo: {
+      type: String,
+      default: "",
+    },
+    role: {
+      type: String,
+      default: "user",
+    },
   },
   { timestamps: true }
 );

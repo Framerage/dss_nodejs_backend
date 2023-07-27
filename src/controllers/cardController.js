@@ -53,6 +53,9 @@ const createCard = async (req, res) => {
     const doc = new cardModal({
       title: req.body.title,
       descrip: req.body.descrip,
+      fullDescrip: req.body.fullDescrip,
+      likes: req.body.likes,
+      price: req.body.price,
       styles: req.body.styles,
       imgUrl: req.body.imgUrl,
       user: req.userId,
