@@ -15,9 +15,9 @@ const cardSchema = new schema(
     fullDescrip: {
       type: String,
     },
-    styles: {
-      type: Array,
-      default: [],
+    theme: {
+      type: String,
+      required: true,
     },
     viewsCount: {
       type: Number,
@@ -36,7 +36,9 @@ const cardSchema = new schema(
       ref: "User",
       required: true,
     },
-    imgUrl: String,
+    imgUrl: {
+      type: Array(String),
+    },
   },
   { timestamps: true }
 );

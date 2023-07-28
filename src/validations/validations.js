@@ -14,12 +14,12 @@ const loginVlidation = [
 const cardCreateValidation = [
   body("title", "Введите название карточки").isLength({ min: 3 }).isString(),
   body("descrip", "Введите описание карточки").isLength({ min: 5 }).isString(),
-  body("styles", "Неверный формат стилей(укажите массив)")
-    .optional()
-    .isString(),
-  body("imgUrl", "Некорректная ссылка").optional().isString(),
   body("fullDescrip", "Введите подробное описание карточки")
     .optional()
     .isString(),
+  body("price", "Некорректная цена").optional().isNumeric(),
+  body("likes", "Некорректные лайки").optional().isNumeric(),
+  body("theme", "Некорректная тематика").isString(),
+  body("imgUrl", "Некорректная ссылка").optional().isString(),
 ];
 module.exports = { registerValidation, loginVlidation, cardCreateValidation };

@@ -24,6 +24,10 @@ const userSchema = new schema(
       type: String,
       default: "user",
     },
+    bonuses: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
