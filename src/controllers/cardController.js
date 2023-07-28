@@ -61,11 +61,17 @@ const createCard = async (req, res) => {
     });
 
     const postCard = await doc.save();
-    res.json(postCard);
+    res.json({
+      ...postCard,
+      success: true,
+      message: "Карточка успешно создалась",
+      status: 200,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({
       message: "Не удалось создать карточку",
+      success: false,
     });
   }
 };

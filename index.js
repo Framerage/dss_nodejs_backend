@@ -5,7 +5,6 @@ const morgan = require("morgan");
 const multer = require("multer");
 const cors = require("cors");
 const mongoose = require("mongoose");
-
 const validations = require("./src/validations/validations");
 const { cardController, userController } = require("./src/controllers");
 const { auth, validationErrs } = require("./src/helpers");
@@ -35,12 +34,12 @@ const upload = multer({ storage });
 const PORT = process.env.APP_PORT || 3333;
 const serverURL = `http://127.0.0.1:${PORT}`;
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use("/uploads", express.static("uploads"));
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ limit: "15mb", extended: true }));
 app.use(cors());
 
 app.get("/add-cards", (req, res) => {

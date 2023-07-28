@@ -20,6 +20,6 @@ const cardCreateValidation = [
   body("price", "Некорректная цена").optional().isNumeric(),
   body("likes", "Некорректные лайки").optional().isNumeric(),
   body("theme", "Некорректная тематика").isString(),
-  body("imgUrl", "Некорректная ссылка").optional().isString(),
+  body("imgUrl", "Некорректные картинки").optional().isArray(String),
 ];
 module.exports = { registerValidation, loginVlidation, cardCreateValidation };

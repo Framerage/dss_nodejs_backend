@@ -37,7 +37,7 @@ const cardSchema = new schema(
       required: true,
     },
     imgUrl: {
-      type: Array(String),
+      type: Array,
     },
   },
   { timestamps: true }
