@@ -10,12 +10,12 @@ const checkAuth = (req, res, next) => {
       next();
     } catch (err) {
       return res.status(403).json({
-        message: "Отсутствует доступ",
+        error: "Отсутствует доступ",
       });
     }
   } else {
     return res.status(403).json({
-      message: "Нет доступа",
+      error: "Нет доступа",
     });
   }
 };
@@ -25,7 +25,7 @@ const checkAdmin = async (req, res, next) => {
   if (!user) {
     console.log(user, "user");
     return res.status(404).json({
-      message: "Пользователь не найден",
+      error: "Пользователь не найден",
     });
   }
   const role = user.role;
@@ -35,13 +35,15 @@ const checkAdmin = async (req, res, next) => {
       req.userId = decodedToken._id;
       next();
     } catch (err) {
-      return res.status(403).json({
-        message: "Отсутствует доступ к функционалу",
+      return res.json({
+        status: 403,
+        error: "Отсутствует доступ к функционалу",
       });
     }
   } else {
-    return res.status(403).json({
-      message: "Нет доступа к функционалу",
+    return res.json({
+      status: 403,
+      error: "Нет доступа к функционалу",
     });
   }
 };

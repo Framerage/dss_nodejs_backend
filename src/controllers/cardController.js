@@ -69,9 +69,10 @@ const createCard = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({
+    res.json({
       message: "Не удалось создать карточку",
       success: false,
+      status: 500,
     });
   }
 };

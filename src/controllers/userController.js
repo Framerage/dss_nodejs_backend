@@ -36,7 +36,7 @@ const userRegister = async (req, res) => {
     console.log(err);
     res
       .status(500)
-      .json({ message: "Регистрация не удалась", sucsess: false, status: 400 });
+      .json({ error: "Регистрация не удалась", sucsess: false, status: 500 });
   }
 };
 const userLogin = async (req, res) => {
@@ -44,13 +44,15 @@ const userLogin = async (req, res) => {
     const user = await userReg.findOne({ email: req.body.email });
     if (!user) {
       return res.status(404).json({
-        message: "Пользователь не найден",
+        status: 404,
+        error: "Пользователь не найден",
       });
     }
     const isValidPass = await bcrypt.compare(req.body.pass, user._doc.pass);
     if (!isValidPass) {
-      return res.status(400).json({
-        message: "Неверный логин или пароль",
+      return res.status(200).json({
+        status: 403,
+        error: "Неверный логин или пароль",
       });
     }
     const token = jwt.sign(
@@ -69,7 +71,10 @@ const userLogin = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Не удалась авторизоваться" });
+    res.status(500).json({
+      status: 500,
+      message: "Не удалась авторизоваться",
+    });
   }
 };
 const getUserInfo = async (req, res) => {
@@ -78,14 +83,19 @@ const getUserInfo = async (req, res) => {
     if (!user) {
       console.log(user, "user");
       return res.status(404).json({
-        message: "Пользователь не найден",
+        status: 404,
+
+        error: "Пользователь не найден",
       });
     }
     const { pass, ...userData } = user._doc;
     res.json(userData);
   } catch (err) {
     console.log(err);
-    res.status(402).json({ message: "Какая-то ошибка" });
+    res.status(402).json({
+      status: 402,
+      error: "Какая-то ошибка",
+    });
   }
 };
 module.exports = {
