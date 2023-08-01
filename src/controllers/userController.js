@@ -54,6 +54,7 @@ const userLogin = async (req, res) => {
     if (!isValidPass) {
       return res.status(403).json({
         status: 403,
+        success: false,
         message: "Неверный логин или пароль",
       });
     }
@@ -70,11 +71,13 @@ const userLogin = async (req, res) => {
     res.json({
       ...userData,
       token,
+      success: true,
     });
   } catch (err) {
     console.log(err);
     res.status(500).json({
       status: 500,
+      success: false,
       message: "Не удалось авторизоваться",
     });
   }
