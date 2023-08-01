@@ -34,9 +34,11 @@ const userRegister = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res
-      .status(500)
-      .json({ error: "Регистрация не удалась", sucsess: false, status: 500 });
+    const reason =
+      req.body.email === err.keyValue?.email
+        ? "Такая почта уже зарегистрирована"
+        : "Регистрация не удалась";
+    res.json({ error: reason, sucsess: false, status: 500 });
   }
 };
 const userLogin = async (req, res) => {
