@@ -38,7 +38,7 @@ const userRegister = async (req, res) => {
       req.body.email === err.keyValue?.email
         ? "Такая почта уже зарегистрирована"
         : "Регистрация не удалась";
-    res.json({ error: reason, sucsess: false, status: 500 });
+    res.status(403).json({ message: reason, sucsess: false });
   }
 };
 const userLogin = async (req, res) => {
@@ -47,14 +47,14 @@ const userLogin = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         status: 404,
-        error: "Пользователь не найден",
+        message: "Пользователь не найден",
       });
     }
     const isValidPass = await bcrypt.compare(req.body.pass, user._doc.pass);
     if (!isValidPass) {
-      return res.status(200).json({
+      return res.status(403).json({
         status: 403,
-        error: "Неверный логин или пароль",
+        message: "Неверный логин или пароль",
       });
     }
     const token = jwt.sign(
@@ -75,7 +75,7 @@ const userLogin = async (req, res) => {
     console.log(err);
     res.status(500).json({
       status: 500,
-      message: "Не удалась авторизоваться",
+      message: "Не удалось авторизоваться",
     });
   }
 };
