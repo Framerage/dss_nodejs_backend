@@ -48,40 +48,51 @@ app.get("/add-cards", (req, res) => {
 
 app.post(
   "/auth/login",
-
   validations.loginVlidation,
   validationErrs.handleValidationErrs,
   userController.userLogin
 );
 app.post(
   "/auth/registration",
-
   validations.registerValidation,
   validationErrs.handleValidationErrs,
   userController.userRegister
 );
 app.get("/auth/me", auth.checkAuth, userController.getUserInfo);
 
-app.post("/upload", auth.checkAuth, upload.single("image"), (req, res) => {
-  console.log(req.file);
-  res.json({
-    url: `/uploads/${req.file.originalname}`,
-  });
-});
+app.post(
+  "/upload",
+  auth.checkAuth,
+  auth.checkAdmin,
+  upload.single("image"),
+  (req, res) => {
+    console.log(req.file);
+    res.json({
+      url: `/uploads/${req.file.originalname}`,
+    });
+  }
+);
 
 app.get("/cards", cardController.getAllCards);
 app.get("/cards/:id", cardController.getCard);
 app.post(
   "/cards",
   auth.checkAuth,
+  auth.checkAdmin,
   validations.cardCreateValidation,
   validationErrs.handleValidationErrs,
   cardController.createCard
 );
-app.delete("/cards/:id", auth.checkAuth, cardController.deleteCard);
+app.delete(
+  "/cards/:id",
+  auth.checkAuth,
+  auth.checkAdmin,
+  cardController.deleteCard
+);
 app.patch(
   "/cards/:id",
   auth.checkAuth,
+  auth.checkAdmin,
   validations.cardCreateValidation,
   validationErrs.handleValidationErrs,
   cardController.editCard
