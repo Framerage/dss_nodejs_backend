@@ -29,7 +29,7 @@ const userRegister = async (req, res) => {
     res.json({
       ...userData,
       message: "Регистрация прошла успешно",
-      sucsess: true,
+      success: true,
       status: 200,
     });
   } catch (err) {
@@ -38,7 +38,7 @@ const userRegister = async (req, res) => {
       req.body.email === err.keyValue?.email
         ? "Такая почта уже зарегистрирована"
         : "Регистрация не удалась";
-    res.status(403).json({ message: reason, sucsess: false });
+    res.status(403).json({ message: reason, success: false });
   }
 };
 const userLogin = async (req, res) => {
@@ -89,7 +89,6 @@ const getUserInfo = async (req, res) => {
       console.log(user, "user");
       return res.status(404).json({
         status: 404,
-
         error: "Пользователь не найден",
       });
     }
