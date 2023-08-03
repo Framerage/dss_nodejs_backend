@@ -1,14 +1,14 @@
 const express = require("express");
 require("dotenv").config();
-const path = require("path");
+// const path = require("path");
 const morgan = require("morgan");
 const multer = require("multer");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const validations = require("./src/validations/validations");
-const { cardController, userController } = require("./src/controllers");
+const { userController } = require("./src/controllers");
 const { auth, validationErrs } = require("./src/helpers");
-
+const apiCardController = require("./src/api/apiCardController");
 mongoose
   .connect(process.env.DB_URL, {
     useNewUrlParser: true,
@@ -17,7 +17,7 @@ mongoose
   .then(() => console.log("Sucsess connect"))
   .catch((err) => console.log(err));
 
-const createPath = (page) => path.resolve(__dirname, `${page}.html`);
+// const createPath = (page) => path.resolve(__dirname, `${page}.html`);
 const app = express();
 
 const storage = multer.diskStorage({
@@ -41,10 +41,6 @@ app.use(
 );
 app.use(express.urlencoded({ limit: "15mb", extended: true }));
 app.use(cors());
-
-app.get("/add-cards", (req, res) => {
-  res.sendFile(createPath("createCard"));
-});
 
 app.post(
   "/auth/login",
@@ -72,31 +68,7 @@ app.post(
     });
   }
 );
-
-app.get("/cards", cardController.getAllCards);
-app.get("/cards/:id", cardController.getCard);
-app.post(
-  "/cards",
-  auth.checkAuth,
-  auth.checkAdmin,
-  validations.cardCreateValidation,
-  validationErrs.handleValidationErrs,
-  cardController.createCard
-);
-app.delete(
-  "/cards/:id",
-  auth.checkAuth,
-  auth.checkAdmin,
-  cardController.deleteCard
-);
-app.patch(
-  "/cards/:id",
-  auth.checkAuth,
-  auth.checkAdmin,
-  validations.cardCreateValidation,
-  validationErrs.handleValidationErrs,
-  cardController.editCard
-);
+app.use(apiCardController);
 
 app.listen(PORT, (err) => {
   err ? console.log(err) : console.log(`Server opened on: ${serverURL}`);
