@@ -5,10 +5,10 @@ const morgan = require("morgan");
 const multer = require("multer");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const validations = require("./src/validations/validations");
-const { userController } = require("./src/controllers");
-const { auth, validationErrs } = require("./src/helpers");
+
+const { auth } = require("./src/helpers");
 const apiCardController = require("./src/api/apiCardController");
+const apiUserController = require("./src/api/apiUserController");
 mongoose
   .connect(process.env.DB_URL, {
     useNewUrlParser: true,
@@ -42,19 +42,19 @@ app.use(
 app.use(express.urlencoded({ limit: "15mb", extended: true }));
 app.use(cors());
 
-app.post(
-  "/auth/login",
-  validations.loginVlidation,
-  validationErrs.handleValidationErrs,
-  userController.userLogin
-);
-app.post(
-  "/auth/registration",
-  validations.registerValidation,
-  validationErrs.handleValidationErrs,
-  userController.userRegister
-);
-app.get("/auth/me", auth.checkAuth, userController.getUserInfo);
+// app.post(
+//   "/auth/login",
+//   validations.loginVlidation,
+//   validationErrs.handleValidationErrs,
+//   userController.userLogin
+// );
+// app.post(
+//   "/auth/registration",
+//   validations.registerValidation,
+//   validationErrs.handleValidationErrs,
+//   userController.userRegister
+// );
+// app.get("/auth/me", auth.checkAuth, userController.getUserInfo);
 
 app.post(
   "/upload",
@@ -69,6 +69,7 @@ app.post(
   }
 );
 app.use(apiCardController);
+app.use(apiUserController);
 
 app.listen(PORT, (err) => {
   err ? console.log(err) : console.log(`Server opened on: ${serverURL}`);

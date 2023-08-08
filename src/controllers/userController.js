@@ -102,8 +102,38 @@ const getUserInfo = async (req, res) => {
     });
   }
 };
+
+const editUserExtraInfo = async (req, res) => {
+  await userReg
+    .findByIdAndUpdate(
+      req.userId,
+      {
+        ...req.body,
+      },
+      { new: true }
+    )
+    .then((user) =>
+      res.status(200).json({
+        success: true,
+        message: "Данные успешно обновлены",
+        userLikes: user.userLikes,
+        userCart: user.userCart,
+      })
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        success: false,
+        message: "Не удалось отредактировать информацию пользователя",
+      });
+    });
+  res.json({
+    success: true,
+  });
+};
 module.exports = {
   userRegister,
   userLogin,
   getUserInfo,
+  editUserExtraInfo,
 };
