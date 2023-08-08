@@ -16,6 +16,6 @@ router.post(
   validationErrs.handleValidationErrs,
   userController.userRegister
 );
-router.patch("/auth/me", auth.checkAuth, userController.editUserExtraInfo);
+router.put("/auth/me", auth.checkAuth, userController.editUserExtraInfo);
 router.get("/auth/me", auth.checkAuth, userController.getUserInfo);
 module.exports = router;
