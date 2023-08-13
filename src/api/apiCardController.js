@@ -5,7 +5,7 @@ const { auth, validationErrs } = require("../helpers");
 const validations = require("../validations/validations");
 
 router.get("/cards", cardController.getAllCards);
-router.post("/cards/:id", cardController.getCard);
+router.get("/cards/:id", cardController.getCard);
 router.post(
   "/cards",
   auth.checkAuth,
