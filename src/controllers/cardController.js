@@ -14,6 +14,7 @@ const getAllCards = async (req, res) => {
 
 const getCard = async (req, res) => {
   const cardId = req.params.id;
+  console.log(cardId, "test id");
   try {
     const card = await cardModal
       .findByIdAndUpdate(
@@ -21,22 +22,22 @@ const getCard = async (req, res) => {
           _id: cardId,
         },
         { $inc: { viewsCount: 1 } },
-        { returnDocument: "after" },
-        (err,
-        (doc) => {
-          if (err) {
-            console.log(err);
-            res.status(500).json({
-              message: "Не удалось запросить карточку",
-            });
-          }
-          if (!doc) {
-            return res.status(404).json({
-              message: "Карточка не найдена",
-            });
-          }
-          res.json(doc);
-        })
+        { new: true }
+        // (err, doc) => {
+        //   if (err) {
+        //     console.log(err);
+        //     res.status(500).json({
+        //       message: "Не удалось получить карточку",
+        //     });
+        //     return;
+        //   }
+        //   if (!doc) {
+        //     return res.status(404).json({
+        //       message: "Карточка не найдена",
+        //     });
+        //   }
+        //   res.json(doc);
+        // }
       )
       .populate("user")
       .exec();
@@ -44,7 +45,7 @@ const getCard = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: "Не удалось получить карточки",
+      message: "Не удалось запросить карточку",
     });
   }
 };
