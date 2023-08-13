@@ -106,7 +106,9 @@ const getUserInfo = async (req, res) => {
 const editUserExtraInfo = async (req, res) => {
   await userReg
     .findByIdAndUpdate(
-      req.userId,
+      {
+        _id: req.userId,
+      },
       {
         ...req.body,
       },
@@ -127,9 +129,6 @@ const editUserExtraInfo = async (req, res) => {
         message: "Не удалось отредактировать информацию пользователя",
       });
     });
-  res.json({
-    success: true,
-  });
 };
 module.exports = {
   userRegister,
