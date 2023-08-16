@@ -101,17 +101,22 @@ const deleteCard = async (req, res) => {
 
 const editCard = async (req, res) => {
   try {
-    await cardModal.updateOne(
-      {
-        _id: req.params.id,
-      },
-      {
-        ...req.body,
-      }
-    );
-    res.json({
-      success: true,
-    });
+    await cardModal
+      .findByIdAndUpdate(
+        {
+          _id: req.params.id,
+        },
+        {
+          ...req.body,
+        },
+        { new: true }
+      )
+      .then((card) => {
+        return res.json({
+          ...card._doc,
+          success: true,
+        });
+      });
   } catch (err) {
     console.log(err);
     res.status(500).json({

@@ -22,6 +22,12 @@ router.delete(
 );
 router.patch(
   "/cards/:id",
+  validations.cardCreateValidation,
+  validationErrs.handleValidationErrs,
+  cardController.editCard
+);
+router.put(
+  "/cards/:id",
   auth.checkAuth,
   auth.checkAdmin,
   validations.cardCreateValidation,
