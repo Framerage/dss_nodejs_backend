@@ -30,7 +30,6 @@ const userRegister = async (req, res) => {
       ...userData,
       message: "Регистрация прошла успешно",
       success: true,
-      status: 200,
     });
   } catch (err) {
     console.log(err, "errorrr");
@@ -53,7 +52,6 @@ const userLogin = async (req, res) => {
     const isValidPass = await bcrypt.compare(req.body.pass, user._doc.pass);
     if (!isValidPass) {
       return res.status(403).json({
-        status: 403,
         success: false,
         message: "Неверный логин или пароль",
       });
@@ -67,10 +65,8 @@ const userLogin = async (req, res) => {
         expiresIn: "1d",
       }
     );
-    const { pass, ...userData } = user._doc;
     res.json({
-      ...userData,
-      token,
+      perAcTkn: token,
       success: true,
     });
   } catch (err) {
@@ -86,7 +82,6 @@ const getUserInfo = async (req, res) => {
   try {
     const user = await userReg.findById(req.userId);
     if (!user) {
-      console.log(user, "user");
       return res.status(404).json({
         status: 404,
         message: "Пользователь не найден",
