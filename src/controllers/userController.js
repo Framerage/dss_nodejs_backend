@@ -88,7 +88,7 @@ const getUserInfo = async (req, res) => {
       });
     }
     const { pass, ...userData } = user._doc;
-    res.json(userData);
+    res.json({ ...userData, success: true });
   } catch (err) {
     console.log(err);
     res.status(402).json({
