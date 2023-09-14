@@ -27,6 +27,10 @@ const orderSchema = new schema(
       type: String,
       default: "",
     },
+    totalPrice: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true }
 );
