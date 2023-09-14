@@ -22,4 +22,19 @@ const cardCreateValidation = [
   body("theme", "Некорректная тематика").isString(),
   body("imgUrl", "Некорректные картинки").optional().isArray(String),
 ];
-module.exports = { registerValidation, loginVlidation, cardCreateValidation };
+
+const orderValidation = [
+  body("email", "Неверный формат почты").isEmail(),
+  body("phoneNum", "Номер должен иметь не менее 12 символов")
+    .isLength({ min: 12 })
+    .isMobilePhone(),
+  body("name", "Имя должно быть не менее 3 символов").isLength({ min: 3 }),
+  body("promo", "Некорректный промокод").optional().isString(),
+  body("city", "Некорректный город").optional().isString(),
+];
+module.exports = {
+  registerValidation,
+  loginVlidation,
+  cardCreateValidation,
+  orderValidation,
+};
