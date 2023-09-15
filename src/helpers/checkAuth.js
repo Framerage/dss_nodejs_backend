@@ -51,29 +51,42 @@ const checkAdmin = async (req, res, next) => {
 };
 const checkUser = async (req, res, next) => {
   const token = req.headers.authorization || "".replace(/Bearer\s?/, "");
-  const user = await userReg.findOne(req.body.email);
+  const user = await userReg.findOne({ email: req.body.email });
 
   if (!user) {
     return res.status(404).json({
       message: "Пользователь не найден",
     });
   }
-  const psS = user.pass;
-  if (token && psS === token) {
+
+  const checkTkn = jwt.sign(
+    {
+      _id: user._id,
+    },
+    process.env.SECRET_KEY,
+    {
+      expiresIn: "1d",
+    }
+  );
+  const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+  const reDecoded = jwt.verify(checkTkn, process.env.SECRET_KEY);
+
+  if (token && decodedToken._id === reDecoded._id) {
     try {
-      const decodedToken = jwt.verify(token, "cucumberbl");
       req.userId = decodedToken._id;
       next();
     } catch (err) {
       return res.status(403).json({
         status: 403,
         message: "Отсутствует доступ к функционалу",
+        success: false,
       });
     }
   } else {
     return res.status(403).json({
       status: 403,
       message: "Нет доступа к функционалу",
+      success: false,
     });
   }
 };

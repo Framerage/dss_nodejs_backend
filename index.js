@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const { auth } = require("./src/helpers");
 const apiCardController = require("./src/api/apiCardController");
 const apiUserController = require("./src/api/apiUserController");
+const apiOrderController = require("./src/api/apiOrderController");
 mongoose
   .connect(process.env.DB_URL, {
     useNewUrlParser: true,
@@ -70,6 +71,7 @@ app.post(
 );
 app.use(apiCardController);
 app.use(apiUserController);
+app.use(apiOrderController);
 
 app.listen(PORT, (err) => {
   err ? console.log(err) : console.log(`Server opened on: ${serverURL}`);
