@@ -1,5 +1,5 @@
 const userOrder = require("../models/orders");
-
+const { sendMsgToEmail } = require("../helpers/sendMsgToEmail");
 const createOrder = async (req, res) => {
   try {
     const doc = new userOrder({
@@ -13,6 +13,12 @@ const createOrder = async (req, res) => {
     });
 
     const postOrder = await doc.save();
+    console.log(req.body.email, "req.body.email");
+    await sendMsgToEmail(
+      req.body.email,
+      req.body.totalPrice,
+      req.body.userCart
+    );
     res.json({
       ...postOrder._doc,
       success: true,
