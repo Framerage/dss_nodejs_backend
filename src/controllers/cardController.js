@@ -1,8 +1,8 @@
 const { response } = require("express");
-const cardModal = require("../models/cards");
+const cardModel = require("../models/cards");
 const getAllCards = async (req, res) => {
   try {
-    const cards = await cardModal.find().populate("user").exec();
+    const cards = await cardModel.find().populate("user").exec();
     res.json(cards);
   } catch (err) {
     console.log(err);
@@ -15,7 +15,7 @@ const getAllCards = async (req, res) => {
 const getCard = async (req, res) => {
   const cardId = req.params.id;
   try {
-    const card = await cardModal
+    const card = await cardModel
       .findByIdAndUpdate(
         {
           _id: cardId,
@@ -42,7 +42,7 @@ const getCard = async (req, res) => {
 };
 const createCard = async (req, res) => {
   try {
-    const doc = new cardModal({
+    const doc = new cardModel({
       title: req.body.title,
       descrip: req.body.descrip,
       fullDescrip: req.body.fullDescrip,
@@ -70,7 +70,7 @@ const createCard = async (req, res) => {
 
 const deleteCard = async (req, res) => {
   try {
-    await cardModal.findByIdAndDelete({
+    await cardModel.findByIdAndDelete({
       _id: req.params.id,
     });
     res.status(200).json({
@@ -89,7 +89,7 @@ const deleteCard = async (req, res) => {
 
 const editCard = async (req, res) => {
   try {
-    await cardModal
+    await cardModel
       .findByIdAndUpdate(
         {
           _id: req.params.id,

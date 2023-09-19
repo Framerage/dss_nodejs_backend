@@ -12,6 +12,25 @@ router.post(
   validationErrs.handleValidationErrs,
   orderController.createOrder
 );
+router.get(
+  "/orders",
+  auth.checkAuth,
+  auth.checkAdmin,
+  auth.checkUser,
+  orderController.getAllOrders
+);
+router.get(
+  "/user-orders",
+  auth.checkAuth,
+  auth.checkUser,
+  orderController.getUserOrders
+);
+router.get(
+  "/user-orders/:id",
+  auth.checkAuth,
+  auth.checkUser,
+  orderController.getOrder
+);
 // router.post(
 //   "/auth/registration",
 //   validations.registerValidation,
