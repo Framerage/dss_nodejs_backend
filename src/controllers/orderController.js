@@ -84,9 +84,55 @@ const getOrder = async (req, res) => {
     });
   }
 };
+const deleteOrder = async (req, res) => {
+  try {
+    await orderModal.findByIdAndDelete({
+      _id: req.params.id,
+    });
+    res.status(200).json({
+      success: true,
+      message: "Done",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Не удалось удалить заказ",
+      error: err,
+    });
+  }
+};
+const editOrder = async (req, res) => {
+  try {
+    await orderModal
+      .findByIdAndUpdate(
+        {
+          _id: req.params.id,
+        },
+        {
+          ...req.body,
+        },
+        { new: true }
+      )
+      .then((order) => {
+        return res.json({
+          ...order._doc,
+          message: "Заказ успешно изменен",
+          success: true,
+        });
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось отредактировать заказ",
+      success: false,
+    });
+  }
+};
 module.exports = {
   createOrder,
   getAllOrders,
   getOrder,
   getUserOrders,
+  deleteOrder,
 };

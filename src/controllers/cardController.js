@@ -81,7 +81,7 @@ const deleteCard = async (req, res) => {
     console.log(err);
     res.status(500).json({
       success: false,
-      message: "Не удалось получить карточки",
+      message: "Не удалось удалить карточку",
       error: err,
     });
   }
@@ -109,6 +109,7 @@ const editCard = async (req, res) => {
     console.log(err);
     res.status(500).json({
       message: "Не удалось отредактировать карточку",
+      success: false,
     });
   }
 };

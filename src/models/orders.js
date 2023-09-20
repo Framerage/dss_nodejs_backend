@@ -19,6 +19,10 @@ const orderSchema = new schema(
       type: String,
       default: "",
     },
+    orderStatus: {
+      type: String,
+      default: "in process",
+    },
     userCart: {
       type: Array,
       default: [],
