@@ -23,7 +23,6 @@ const checkAuth = (req, res, next) => {
 };
 const checkAdmin = async (req, res, next) => {
   const token = req.headers.authorization || "".replace(/Bearer\s?/, "");
-  console.log(req);
   const user = await userReg.findById(req.userId);
   if (!user) {
     return res.status(404).json({
@@ -52,7 +51,6 @@ const checkAdmin = async (req, res, next) => {
 const checkUser = async (req, res, next) => {
   const token = req.headers.authorization || "".replace(/Bearer\s?/, "");
   const user = await userReg.findOne({ email: req.body.email });
-
   if (!user) {
     return res.status(404).json({
       message: "Пользователь не найден",

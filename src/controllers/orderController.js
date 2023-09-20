@@ -34,8 +34,7 @@ const createOrder = async (req, res) => {
 };
 const getAllOrders = async (req, res) => {
   try {
-    const orders = await orderModal.find().populate("user").exec();
-    console.log(orders, "order all");
+    const orders = await orderModal.find().exec();
     res.json({ orders: orders, success: true });
   } catch (err) {
     console.log(err);
@@ -47,10 +46,15 @@ const getAllOrders = async (req, res) => {
 };
 const getUserOrders = async (req, res) => {
   try {
-    // const userOrders
-    console.log("test");
+    const orders = await orderModal.find().exec();
+    const userOrders = orders.filter((order) => order.email === req.body.email);
+    res.json({ orders: userOrders, success: true });
   } catch (err) {
     console.log(err, "error orders");
+    res.status(500).json({
+      message: "Не удалось получить личные заказы",
+      success: false,
+    });
   }
 };
 const getOrder = async (req, res) => {

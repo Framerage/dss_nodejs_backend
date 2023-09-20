@@ -5,21 +5,21 @@ const { orderController } = require("../controllers");
 const { auth, validationErrs } = require("../helpers");
 
 router.post(
-  "/order",
+  "/create-order",
   auth.checkAuth,
   auth.checkUser,
   validations.orderValidation,
   validationErrs.handleValidationErrs,
   orderController.createOrder
 );
-router.get(
+router.post(
   "/orders",
   auth.checkAuth,
   auth.checkAdmin,
   auth.checkUser,
   orderController.getAllOrders
 );
-router.get(
+router.post(
   "/user-orders",
   auth.checkAuth,
   auth.checkUser,
