@@ -135,4 +135,5 @@ module.exports = {
   getOrder,
   getUserOrders,
   deleteOrder,
+  editOrder,
 };

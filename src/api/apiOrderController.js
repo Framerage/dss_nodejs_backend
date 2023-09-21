@@ -31,6 +31,12 @@ router.get(
   auth.checkUser,
   orderController.getOrder
 );
+router.delete(
+  "/orders/:id",
+  auth.checkAuth,
+  auth.checkAdmin,
+  orderController.deleteOrder
+);
 // router.post(
 //   "/auth/registration",
 //   validations.registerValidation,
