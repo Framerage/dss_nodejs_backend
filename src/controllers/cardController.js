@@ -1,4 +1,3 @@
-const { response } = require("express");
 const cardModel = require("../models/cards");
 const getAllCards = async (req, res) => {
   try {

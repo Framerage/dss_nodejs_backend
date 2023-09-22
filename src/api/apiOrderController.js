@@ -37,12 +37,12 @@ router.delete(
   auth.checkAdmin,
   orderController.deleteOrder
 );
-// router.post(
-//   "/auth/registration",
-//   validations.registerValidation,
-//   validationErrs.handleValidationErrs,
-//   userController.userRegister
-// );
-// router.put("/auth/me", auth.checkAuth, userController.editUserExtraInfo);
-// router.get("/auth/me", auth.checkAuth, userController.getUserInfo);
+router.patch(
+  "/orders/:id",
+  auth.checkAuth,
+  auth.checkAdmin,
+  validations.orderValidation,
+  validationErrs.handleValidationErrs,
+  orderController.editOrder
+);
 module.exports = router;

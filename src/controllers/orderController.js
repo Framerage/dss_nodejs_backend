@@ -114,9 +114,8 @@ const editOrder = async (req, res) => {
         },
         { new: true }
       )
-      .then((order) => {
+      .then(() => {
         return res.json({
-          ...order._doc,
           message: "Заказ успешно изменен",
           success: true,
         });
