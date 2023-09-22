@@ -2,10 +2,15 @@
   "name": "dss_nodejs_backend",
   "version": "1.0.0",
   "main": "index.js",
+  "private": true,
+  "homepage": "https://framerage.github.io/dss_nodejs_backend",
   "author": "framerage",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build": "node build",
+    "deploy": "gh-pages -d build",
+    "predeploy": "yarn build"
   },
   "dependencies": {
     "@types/nodemailer": "^6.4.10",
