@@ -1,7 +1,8 @@
 const nodeMailer = require("nodemailer");
 
-const html = (result) => {
-  return `<!DOCTYPE html>
+const html = (result, totalPrice, phone, orderStatus) => {
+  if (orderStatus === "create") {
+    return `<!DOCTYPE html>
     <html lang="en">
       <head>
         <meta charset="UTF-8" />
@@ -9,31 +10,43 @@ const html = (result) => {
         <title>Decor spirit</title>
       </head>
       <body>
-        <header>
-          <h1>Thanks for order</h1>
-        </header>
-        <main>
-          <h2>Order successful complete</h2>
-          <span class="successMsg">Your total price: 10000rub</span>
-          <div id='ordersContainer'>
-          ${result}
-          </div>
-        </main>
+    <div style="
+    background: linear-gradient(30deg, black, #013535, black);
+    border: 4px groove aqua;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    text-shadow: 0 0 5px aqua;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+  ">
+    <h1>Thanks for order</h1>
+    <h2>Order accepted for processing</h2>
+    <span>Your choosed phone: ${phone}</span>
+    <span>We will contact you soon</span>
+    <span>You ordered: </span>
+    ${result}
+    <span>Your total price: ${totalPrice} rub</span>
+    </div>
       </body>
     </html>`;
+  }
+  return "Your order is cancelled/deleted";
 };
 const createOrdersList = async (products) => {
   const orderItem = [];
   products.map((item, index) => {
     orderItem.push(
-      "<span>" +
+      "<span style='font-size: 16px; padding: 5px 10px'>" +
         (index + 1) +
         ". " +
         item.title +
         "___" +
+        " x" +
         item.itemCount +
-        " шт" +
-        "___" +
+        " ___" +
         item.price * item.itemCount +
         " rub" +
         "</span><br/>"
@@ -41,7 +54,13 @@ const createOrdersList = async (products) => {
   });
   return "<div>" + orderItem.join("") + "</div>";
 };
-async function sendMsgToEmail(mailTo, orderPrice, products) {
+async function sendMsgToEmail(
+  mailTo,
+  orderPrice,
+  products,
+  phone,
+  orderStatus
+) {
   const transporter = nodeMailer.createTransport({
     host: "smtp.mail.ru",
     port: 465,
@@ -52,16 +71,12 @@ async function sendMsgToEmail(mailTo, orderPrice, products) {
     },
   });
   const result = await createOrdersList(products);
-  console.log(result, "result");
   await transporter.sendMail({
     from: "DecorSpirit <officialigonin@mail.ru>",
     to: mailTo ? mailTo : "officialigonin@mail.ru",
-    subject: `Your order price ${orderPrice}`,
-    html: html(result),
+    subject: mailTo ? `Your order price #${orderPrice}` : `Error with order #`,
+    html: html(result, orderPrice, phone, orderStatus),
   });
-  //   console.log("Message sent: " + info.messageId);
-  //   console.log(info.accepted);
-  //   console.log(info.rejected);
 }
 module.exports = {
   sendMsgToEmail,

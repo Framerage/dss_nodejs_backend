@@ -17,7 +17,9 @@ const createOrder = async (req, res) => {
     await sendMsgToEmail(
       req.body.email,
       req.body.totalPrice,
-      req.body.userCart
+      req.body.userCart,
+      req.body.phoneNum,
+      "create"
     );
     res.json({
       ...postOrder._doc,
