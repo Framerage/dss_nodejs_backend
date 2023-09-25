@@ -1,6 +1,6 @@
 const nodeMailer = require("nodemailer");
 
-const html = (products) => {
+const html = (result) => {
   return `<!DOCTYPE html>
     <html lang="en">
       <head>
@@ -15,23 +15,32 @@ const html = (products) => {
         <main>
           <h2>Order successful complete</h2>
           <span class="successMsg">Your total price: 10000rub</span>
-          <div id='ordersContainer'></div>
+          <div id='ordersContainer'>
+          ${result}
+          </div>
         </main>
-        <script>
-        const renderOrder=(${products})=>{
-            const container = document.getElementById('ordersContainer')
-            products.map((item,index)=>{
-                const orderItem=document.createElement('div')
-                orderItem.innerText=index+'. '+item.title+'___'+item.price*item.itemCount
-                container.push(orderItem)
-            })
-        }
-        renderOrder()
-        </script>
       </body>
     </html>`;
 };
-
+const createOrdersList = async (products) => {
+  const orderItem = [];
+  products.map((item, index) => {
+    orderItem.push(
+      "<span>" +
+        (index + 1) +
+        ". " +
+        item.title +
+        "___" +
+        item.itemCount +
+        " шт" +
+        "___" +
+        item.price * item.itemCount +
+        " rub" +
+        "</span><br/>"
+    );
+  });
+  return "<div>" + orderItem.join("") + "</div>";
+};
 async function sendMsgToEmail(mailTo, orderPrice, products) {
   const transporter = nodeMailer.createTransport({
     host: "smtp.mail.ru",
@@ -42,12 +51,13 @@ async function sendMsgToEmail(mailTo, orderPrice, products) {
       pass: process.env.MAIL_EXTRA_PASS,
     },
   });
-  console.log(mailTo, "mailTo");
+  const result = await createOrdersList(products);
+  console.log(result, "result");
   await transporter.sendMail({
     from: "DecorSpirit <officialigonin@mail.ru>",
     to: mailTo ? mailTo : "officialigonin@mail.ru",
     subject: `Your order price ${orderPrice}`,
-    html: html(products),
+    html: html(result),
   });
   //   console.log("Message sent: " + info.messageId);
   //   console.log(info.accepted);
