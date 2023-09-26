@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const userReg = require("../models/user");
+const { sendMsgToEmail } = require("../helpers/sendMsgToEmail");
 const accessMails = ["officialigonin@mail.ru"];
 const userRegister = async (req, res) => {
   try {
@@ -26,6 +27,7 @@ const userRegister = async (req, res) => {
 
     const user = await userDoc.save();
     const { pass, ...userData } = user._doc;
+    await sendMsgToEmail(email, name, [], "", "registration", password);
     res.json({
       ...userData,
       message: "Регистрация прошла успешно",

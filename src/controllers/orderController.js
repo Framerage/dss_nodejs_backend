@@ -13,7 +13,6 @@ const createOrder = async (req, res) => {
     });
 
     const postOrder = await doc.save();
-    console.log(req.body.email, "req.body.email");
     await sendMsgToEmail(
       req.body.email,
       req.body.totalPrice,
@@ -88,9 +87,16 @@ const getOrder = async (req, res) => {
 };
 const deleteOrder = async (req, res) => {
   try {
-    await orderModal.findByIdAndDelete({
+    const deletedOrder = await orderModal.findByIdAndDelete({
       _id: req.params.id,
     });
+    await sendMsgToEmail(
+      deletedOrder.email,
+      deletedOrder.totalPrice,
+      deletedOrder.userCart,
+      deletedOrder.phoneNum,
+      "delete"
+    );
     res.status(200).json({
       success: true,
       message: "Done",
@@ -104,6 +110,7 @@ const deleteOrder = async (req, res) => {
     });
   }
 };
+
 const editOrder = async (req, res) => {
   try {
     await orderModal
@@ -116,10 +123,25 @@ const editOrder = async (req, res) => {
         },
         { new: true }
       )
-      .then(() => {
+      .then(async () => {
+        await sendMsgToEmail(
+          req.body.email,
+          req.body.totalPrice,
+          req.body.userCart,
+          req.body.phoneNum,
+          "statusEdit",
+          req.body.orderStatus
+        );
         return res.json({
           message: "Заказ успешно изменен",
           success: true,
+        });
+      })
+      .catch((err) => {
+        return res.json({
+          message: "Не удалось обновить данные заказа",
+          success: false,
+          error: err,
         });
       });
   } catch (err) {
