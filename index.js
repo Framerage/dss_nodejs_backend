@@ -10,6 +10,7 @@ const { auth } = require("./src/helpers");
 const apiCardController = require("./src/api/apiCardController");
 const apiUserController = require("./src/api/apiUserController");
 const apiOrderController = require("./src/api/apiOrderController");
+console.log(process.env.DB_URL, "process.env.DB_URL");
 mongoose
   .connect(process.env.DB_URL, {
     useNewUrlParser: true,
