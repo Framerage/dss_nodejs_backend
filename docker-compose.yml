@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   web:
     build:
@@ -6,9 +6,16 @@ services:
       dockerfile: Dockerfile
       args:
         NODE_ENV: production2
-        DB_URL: 'mongodb+srv://ragedrage:ig957301@cluster0.xbef61b.mongodb.net/decorspirit-shop'
+        DB_URL: "mongodb+srv://ragedrage:ig957301@cluster0.xbef61b.mongodb.net/decorspirit-shop"
         PORT: 8080
-        SECRET_KEY: 'cucumberbl'
+        SECRET_KEY: "cucumberbl"
         MAIL_EXTRA_PASS: QVckrZiG75jwhK1TGYK
+        # NODE_ENV: $NODE_ENV
+        # DB_URL: $DB_URL
+        # PORT: $PORT
+        # SECRET_KEY: $SECRET_KEY
+        # MAIL_EXTRA_PASS: $MAIL_EXTRA_PASS
     ports:
       - 8080:8080
+    env_file:
+      - .env
