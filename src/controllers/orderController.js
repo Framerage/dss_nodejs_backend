@@ -10,8 +10,23 @@ const createOrder = async (req, res) => {
       city: req.body.city,
       promo: req.body.promo,
       userCart: req.body.userCart,
+      orderType: req.body.orderType,
+      specImgsOrder: req.body.specImgsOrder,
     });
+    // await doc.insert({ orderNum: "productid", sequence_value: 0 });
+    // await doc.save();
+    // await orderModal.findOneAndUpdate(
+    //   // { _id: newOrder._id },
+    //   // { _id: req.params.id },
+    //   { id: "autoval" },
 
+    //   { $inc: { orderNum: 1 } },
+    //   { new: true }
+    //   // (err, res) => {
+    //   //   console.log(res, "error res");
+    //   //   console.log(err, "error update");
+    //   // }
+    // );
     const postOrder = await doc.save();
     await sendMsgToEmail(
       req.body.email,

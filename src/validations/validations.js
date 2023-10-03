@@ -31,6 +31,8 @@ const orderValidation = [
   body("name", "Имя должно быть не менее 3 символов").isLength({ min: 3 }),
   body("promo", "Некорректный промокод").optional().isString(),
   body("city", "Некорректный город").optional().isString(),
+  body("orderType", "Некорректный тип").optional().isString(),
+  body("specImgsOrder", "Некорректные картинки").optional().isArray(String),
 ];
 module.exports = {
   registerValidation,

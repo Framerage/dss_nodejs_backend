@@ -35,8 +35,33 @@ const orderSchema = new schema(
       type: Number,
       required: true,
     },
+    orderType: {
+      type: String,
+      default: "usual",
+    },
+    specImgsOrder: {
+      type: Array,
+      default: [],
+    },
+    orderNum: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
+orderSchema.pre("save", function (next) {
+  var docs = this;
+  const result = mongoose.model("Order", orderSchema).count(
+    { _id: docs._id },
+    //   , function (error, counter) {
+    //   if (error) return next(error);
+    //   docs.orderNum = counter + 1;
+    next()
+    // }
+  );
+  console.log(result, "result");
+  // next();
+});
 const userOrder = mongoose.model("Order", orderSchema);
 module.exports = userOrder;
