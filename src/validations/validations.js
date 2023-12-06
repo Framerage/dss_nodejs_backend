@@ -34,9 +34,13 @@ const orderValidation = [
   body("orderType", "Некорректный тип").optional().isString(),
   body("specImgsOrder", "Некорректные картинки").optional().isArray(String),
 ];
+const cartValidation=[
+  body('userCart',"Неверный формат").isArray(String)
+]
 module.exports = {
   registerValidation,
   loginVlidation,
   cardCreateValidation,
   orderValidation,
+  cartValidation
 };

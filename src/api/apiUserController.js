@@ -16,6 +16,13 @@ router.post(
   validationErrs.handleValidationErrs,
   userController.userRegister
 );
+
+router.post("/auth/me/cart",
+auth.checkAuth,
+auth.checkUser,
+validations.cartValidation,
+validationErrs.handleValidationErrs,
+userController.getUserCart);
 router.put("/auth/me", auth.checkAuth, userController.editUserExtraInfo);
 router.get("/auth/me", auth.checkAuth, userController.getUserInfo);
 module.exports = router;

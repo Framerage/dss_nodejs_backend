@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const userReg = require("../models/user");
+const cardModel = require("../models/cards");
+
 const { sendMsgToEmail } = require("../helpers/sendMsgToEmail");
 const accessMails = ["officialigonin@mail.ru"];
 const userRegister = async (req, res) => {
@@ -100,6 +102,27 @@ const getUserInfo = async (req, res) => {
   }
 };
 
+const getUserCart = async (req,res)=>{
+  try{
+  const cardsId = req.body.userCart;
+    const cards = await cardModel.find().populate("user").exec();
+    const filteredCards=cards.filter(card=>cardsId.includes(card.id)      
+    )
+      res.json({
+        cartCards:filteredCards,
+        message: "Успешно",
+        success:true
+      });
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json({
+      cartCards:[],
+      message: "Не удалось получить карточки",
+      success:false
+    });
+  }
+}
 const editUserExtraInfo = async (req, res) => {
   await userReg
     .findByIdAndUpdate(
@@ -132,4 +155,5 @@ module.exports = {
   userLogin,
   getUserInfo,
   editUserExtraInfo,
+  getUserCart
 };
