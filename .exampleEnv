@@ -1,3 +1,5 @@
 DB_URL='https://640adea265d3a01f98095963.mockapi.io'
 DB_URL='mongodb+srv://ragedrage:ig957301@cluster0.xbef61b.mongodb.net/decorspirit-shop'
 APP_PORT=3333
+EMAIL_EXTRA_PASS
+ADMIN_EMAIL

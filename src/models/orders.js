@@ -21,7 +21,7 @@ const orderSchema = new schema(
     },
     orderStatus: {
       type: String,
-      default: "in process",
+      default: "в обработке",
     },
     userCart: {
       type: Array,
@@ -52,7 +52,8 @@ const orderSchema = new schema(
 );
 orderSchema.pre("save", function (next) {
   var docs = this;
-  const result = mongoose.model("Order", orderSchema).count(
+  // const result =
+   mongoose.model("Order", orderSchema).count(
     { _id: docs._id },
     //   , function (error, counter) {
     //   if (error) return next(error);
@@ -60,7 +61,7 @@ orderSchema.pre("save", function (next) {
     next()
     // }
   );
-  console.log(result, "result");
+  // console.log(result, "result");
   // next();
 });
 const userOrder = mongoose.model("Order", orderSchema);

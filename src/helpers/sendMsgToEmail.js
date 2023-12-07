@@ -77,7 +77,7 @@ const createOrdersList = async (products) => {
   });
   return "<div>" + orderItem.join("") + "</div>";
 };
-const adminEmail = "officialigonin@mail.ru";
+const adminEmail = process.env.ADMIN_EMAIL;
 const checkMsgStatus = (msg, orderNumber) => {
   if (msg === "create") {
     return `Your order #${orderNumber} accepted`;
