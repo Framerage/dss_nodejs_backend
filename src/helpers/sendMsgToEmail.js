@@ -78,6 +78,7 @@ const createOrdersList = async (products) => {
   return "<div>" + orderItem.join("") + "</div>";
 };
 const adminEmail = process.env.ADMIN_EMAIL;
+const adminPass =process.env.MAIL_EXTRA_PASS
 const checkMsgStatus = (msg, orderNumber) => {
   if (msg === "create") {
     return `Your order #${orderNumber} accepted`;
@@ -107,7 +108,7 @@ async function sendMsgToEmail(
     secure: true,
     auth: {
       user: adminEmail,
-      pass: process.env.MAIL_EXTRA_PASS,
+      pass: adminPass,
     },
   });
   const result = await createOrdersList(products);

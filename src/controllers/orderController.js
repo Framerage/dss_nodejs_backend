@@ -12,6 +12,7 @@ const createOrder = async (req, res) => {
       userCart: req.body.userCart,
       orderType: req.body.orderType,
       specImgsOrder: req.body.specImgsOrder,
+      orderDescrip:req.body.orderDescrip,
     });
     // await doc.insert({ orderNum: "productid", sequence_value: 0 });
     // await doc.save();

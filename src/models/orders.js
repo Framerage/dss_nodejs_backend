@@ -47,6 +47,10 @@ const orderSchema = new schema(
       type: Number,
       default: 0,
     },
+    orderDescrip:{
+      type: String,
+      default: "",
+    }
   },
   { timestamps: true }
 );
